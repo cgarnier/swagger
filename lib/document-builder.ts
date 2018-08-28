@@ -65,7 +65,7 @@ export class DocumentBuilder {
     return this;
   }
 
-  public addBearerAuth(
+  public addApiKeyAuth(
     name: string = 'Authorization',
     location: 'header' | 'body' | 'query' = 'header',
     type: string = 'apiKey'
@@ -76,6 +76,22 @@ export class DocumentBuilder {
         type,
         name,
         in: location
+      }
+    };
+    return this;
+  }
+
+  public addBearerAuth(
+    scheme: string = 'bearer',
+    bearerFormat: 'JWT',
+    type: string = 'http'
+  ): this {
+    this.document.securityDefinitions = {
+      ...(this.document.securityDefinitions || {}),
+      bearer: {
+        type,
+        scheme,
+        bearFormat
       }
     };
     return this;
